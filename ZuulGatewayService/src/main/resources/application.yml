@@ -1,0 +1,24 @@
+server:
+  port: 9090
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+zuul:
+#  ignored-services: '*'
+  routes:
+    main_fraud_api_:
+      path: '/main_fraud_api/**'
+      url: 'http://localhost:5000'
+    fraud_api_db:
+      path: '/fraud_data/**'
+      url: 'http://localhost:3000'
+    fraud_prep_model:
+      path: '/prep_model/**'
+      url: 'http://localhost:1000'
+  sensitiveHeaders: Cookie,Set-Cookie #to able Zuul server to contain basic http authen
